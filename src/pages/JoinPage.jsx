@@ -24,14 +24,14 @@ function JoinPage() {
       alert("아이디와 비밀번호를 모두 입력해주세요.");
       return; // 제출을 중단하고 함수를 종료
     }
-    if (id === String(id)) {
-      alert("아이디는 영문자로 입력해주세요");
-      return;
-    }
-    if (password === String(password)) {
-      alert("비밀번호는 영문자로 입력해주세요");
-      return;
-    }
+    // if (id === String(id)) {
+    //   alert("아이디는 영문자로 입력해주세요");
+    //   return;
+    // }
+    // if (password === String(password)) {
+    //   alert("비밀번호는 영문자로 입력해주세요");
+    //   return;
+    // }
 
     try {
       const response = await axios.post(
@@ -44,7 +44,7 @@ function JoinPage() {
       navigate("/login");
     } catch (error) {
       console.log("회원가입 실패", error);
-      alert("중복된 아이디입니다.");
+      alert(error.response.data.message);
     }
   };
   // 컴파일 단계의 에러들을 잡아줌 then catch의 ㅍ괄적

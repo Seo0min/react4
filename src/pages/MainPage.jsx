@@ -8,7 +8,9 @@ function MainPage() {
   const [mainContent, setMainContent] = useState([]);
 
   const mainData = async () => {
-    const { data } = await axios.get("http://localhost:4000/body");
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_SERVER_MOCK_URL}`
+    );
     setMainContent(data);
   };
 
@@ -20,12 +22,12 @@ function MainPage() {
   return (
     <div>
       <h1>고객 정보</h1>
-      {mainContent?.map((item) => (
+      {/* {mainContent?.map((item) => (
         <div key={item.id}>
           아이디: {item.id}
           <div>비밀번호: {item.password}</div>
         </div>
-      ))}
+      ))} */}
 
       <div>
         <button
