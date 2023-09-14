@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Validation from "../util/validation";
 
 function JoinPage() {
   const navigate = useNavigate();
@@ -19,20 +20,19 @@ function JoinPage() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     // 버튼 클릭 시 리프레시 방지
-
     if (!id || !password) {
       alert("아이디와 비밀번호를 모두 입력해주세요.");
-      return; // 제출을 중단하고 함수를 종료
+      return;
     }
-    // if (id === String(id)) {
-    //   alert("아이디는 영문자로 입력해주세요");
-    //   return;
-    // }
-    // if (password === String(password)) {
-    //   alert("비밀번호는 영문자로 입력해주세요");
-    //   return;
-    // }
-
+  
+    const validationMessage = Validation(id, password);
+  
+    if (validationMessage) {
+      alert(validationMessage);
+      // 유효성 검사 실패 시 함수 종료
+      return;
+    }
+  
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_MOCK_URL}register`,
@@ -41,13 +41,14 @@ function JoinPage() {
       // 서버로 회원가입 요청을 보내고 응답을 기다리기
       console.log("회원가입 성공", response.data);
       alert("회원가입 완료");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.log("회원가입 실패", error);
       alert(error.response.data.message);
     }
   };
-  // 컴파일 단계의 에러들을 잡아줌 then catch의 ㅍ괄적
+  
+  // 컴파일 단계의 에러들을 잡아줌 then catch의 포괄적
 
   return (
     <>

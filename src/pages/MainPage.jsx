@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { removeToken } from "../util/token";
 
 function MainPage() {
   const navigate = useNavigate();
@@ -19,24 +20,16 @@ function MainPage() {
     mainData();
   }, []);
 
+  const onLogoutHandler = () => {
+    removeToken();
+    navigate("/");
+  };
+
   return (
     <div>
-      <h1>고객 정보</h1>
-      {/* {mainContent?.map((item) => (
-        <div key={item.id}>
-          아이디: {item.id}
-          <div>비밀번호: {item.password}</div>
-        </div>
-      ))} */}
-
+      <h1>로그인 성공!</h1>
       <div>
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          로그아웃
-        </button>
+        <button onClick={onLogoutHandler}>로그아웃</button>
       </div>
     </div>
   );
